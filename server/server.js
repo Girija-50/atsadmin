@@ -1,11 +1,24 @@
+import resumeRoutes from "./routes/resumeRoutes.js";
+import rateLimit from "express-rate-limit";
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import helmet from "helmet";
 
 dotenv.config();
 
 const app = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests. Try again later.",
+});
+app.use(helmet());
+app.use("/auth", authRoutes);
+
+app.use("/resume", resumeRoutes);
+app.use(limiter);
 
 app.use(express.json());
 
