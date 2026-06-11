@@ -72,10 +72,21 @@ app.use(
   "/api/linkedin",
   linkedinRoutes
 );
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "ATS Resume Analyzer Backend Running Successfully"
+  });
+});
 app.get("/test", (req, res) => {
   res.json({
     success: true,
     message: "API Working"
+  });
+});
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK"
   });
 });
 app.get(
@@ -92,7 +103,7 @@ mongoose
     console.log("MongoDB Connected");
   })
   .catch((err) => {
-    console.log(err);
+    console.log("MongoDB Error:", err);
   });
 
 const PORT = process.env.PORT || 5000;
