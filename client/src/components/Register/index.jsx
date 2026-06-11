@@ -1,22 +1,32 @@
+import { useNavigate }
+from "react-router-dom";
 import { useState } from "react";
 
 function Register() {
-  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [name, setName] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
 
   const [password, setPassword] =
     useState("");
 
+
   const handleRegister = async () => {
+
     try {
+
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth/register`,
+        "http://localhost:5000/auth/register",
         {
           method: "POST",
 
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
 
           body: JSON.stringify({
@@ -27,18 +37,31 @@ function Register() {
         }
       );
 
-      const data = await response.json();
+      const data =
+        await response.json();
 
       console.log(data);
 
+      if (!response.ok) {
+        return alert(data.error);
+      }
+
       alert("Register Success");
+      navigate("/");
+
     } catch (error) {
+
       console.log(error);
+
+      alert("Failed to fetch");
+
     }
   };
 
+
   return (
     <div>
+
       <h1>Register</h1>
 
       <input
@@ -77,9 +100,12 @@ function Register() {
       <br />
       <br />
 
-      <button onClick={handleRegister}>
+      <button
+        onClick={handleRegister}
+      >
         Register
       </button>
+
     </div>
   );
 }

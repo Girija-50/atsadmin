@@ -1,13 +1,48 @@
 import mongoose from "mongoose";
 
 const resumeSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 
-  text: String,
+  templateType: {
+    type: String,
+    required: true,
+  },
 
-  atsScore: Number,
+  name: String,
 
-  suggestions: Object,
+  email: String,
+
+  phone: String,
+
+  summary: String,
+
+  education: String,
+
+  skills: String,
+
+  projects: String,
+
+  experience: String,
+
+  certifications: String,
+
+  atsScore: {
+    type: Number,
+    default: 0,
+  },
+
+  suggestions: {
+    type: Object,
+    default: {},
+  },
+
+  resumeVersion: {
+    type: Number,
+    default: 1,
+  },
 
   createdAt: {
     type: Date,

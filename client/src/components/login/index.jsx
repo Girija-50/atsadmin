@@ -1,18 +1,29 @@
+import { useNavigate }
+from "react-router-dom";
 import { useState } from "react";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
 
   const handleLogin = async () => {
+
     try {
+
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
+        "http://localhost:5000/auth/login",
         {
           method: "POST",
 
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
 
           body: JSON.stringify({
@@ -21,35 +32,46 @@ function Login() {
           }),
         }
       );
-      const data = await response.json();
 
+      const data =
+        await response.json();
 
-         localStorage.setItem(
+      console.log(data);
+
+      if (!response.ok) {
+        return alert(data.error);
+      }
+
+      localStorage.setItem(
         "token",
         data.token
-        );
-
-        console.log(data);
-      
-
-      
-
+      );
 
       alert("Login Success");
+      navigate("/resumes");
+
     } catch (error) {
+
       console.log(error);
+
+      alert("Failed to fetch");
+
     }
   };
 
+
   return (
     <div>
+
       <h1>Login</h1>
 
       <input
         type="email"
         placeholder="Enter Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) =>
+          setEmail(e.target.value)
+        }
       />
 
       <br />
@@ -59,15 +81,20 @@ function Login() {
         type="password"
         placeholder="Enter Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) =>
+          setPassword(e.target.value)
+        }
       />
 
       <br />
       <br />
 
-      <button onClick={handleLogin}>
+      <button
+        onClick={handleLogin}
+      >
         Login
       </button>
+
     </div>
   );
 }

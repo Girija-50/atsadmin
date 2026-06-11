@@ -1,8 +1,5 @@
 import express from "express";
-
-import authMiddleware from "../middleware/authMiddleware.js";
-
-import { upload } from "../middleware/upload.js";
+import multer from "multer";
 
 import {
   uploadResume,
@@ -11,17 +8,53 @@ import {
 
 const router = express.Router();
 
+// Storage config
+const storage = multer.diskStorage({
+  destination: function (
+    req,
+    file,
+    cb
+  ) {
+    cb(null, "uploads/");
+  },
+
+  filename: function (
+    req,
+    file,
+    cb
+  ) {
+    cb(
+      null,
+      Date.now() +
+        "-" +
+        file.originalname
+    );
+  },
+});
+
+const upload = multer({
+  storage,
+});
+
+// Upload Resume
 router.post(
   "/upload",
-  authMiddleware,
   upload.single("resume"),
+  (req, res, next) => {
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+    next();
+  },
   uploadResume
 );
 
+
+
+// Analyze Resume
 router.post(
   "/analyze",
-  authMiddleware,
   analyzeResume
 );
 
 export default router;
+
