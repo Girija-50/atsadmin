@@ -50,6 +50,8 @@ export const loginUser = async (
   req,
   res
 ) => {
+   console.log("Login Request:", req.body);
+  
   try {
     const { email, password } = req.body;
 
@@ -94,10 +96,11 @@ export const loginUser = async (
       user,
     });
   } catch (error) {
-    console.log(error);
+      console.log("LOGIN ERROR:", error);
 
     res.status(500).json({
-      message: "Server Error",
+      success: false,
+      error: error.message
     });
   }
 };
