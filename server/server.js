@@ -35,11 +35,15 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://girija-ats-resume.vercel.app"
+      "https://girija-ats-resume.vercel.app",
+      "https://girija-ats-resume-kiudwl8wr-girija-50s-projects.vercel.app"
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+
     credentials: true
   })
 );
+
 
 app.use(express.json());
 
