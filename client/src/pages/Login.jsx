@@ -23,9 +23,11 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response =
-        await axios.post(
-          "http://localhost:5000/api/auth/login",
+        const API =
+          import.meta.env.VITE_API_URL;
+
+        const response = await axios.post(
+          `${API}/api/auth/login`,
           formData
         );
 
@@ -69,7 +71,7 @@ function Login() {
 
         <input
           type="password"
-          name="password"
+          name=""
           placeholder="Password"
           onChange={handleChange}
         />

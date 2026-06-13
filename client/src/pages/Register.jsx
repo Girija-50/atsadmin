@@ -26,13 +26,15 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response =
+        const API =
+          import.meta.env.VITE_API_URL;
+
         await axios.post(
-          "http://localhost:5000/api/auth/register",
+          `${API}/api/auth/register`,
           formData
         );
 
-      alert(response.data.message);
+      alert("Registration successful");
 
       navigate("/");
     } catch (error) {
