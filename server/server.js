@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import tailorRoutes
@@ -109,14 +108,7 @@ app.get(
     );
   }
 );
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB Connected");
-  })
-  .catch((err) => {
-    console.log("MongoDB Error:", err);
-  });
+
 
 const PORT = process.env.PORT || 5000;
 app.use(
