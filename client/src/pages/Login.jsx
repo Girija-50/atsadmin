@@ -71,8 +71,8 @@ function Login() {
 
         <input
           type="password"
-          name=""
-          placeholder="Password"
+          name="password"
+          value={formData.password}
           onChange={handleChange}
         />
 
