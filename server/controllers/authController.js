@@ -1,15 +1,12 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// Temporary in-memory user storage
 const users = [];
 
-// Register User
 export const registerUser = async (req, res) => {
 try {
 const { name, email, password } = req.body;
 
-// Check existing user
 const existingUser = users.find(
   (user) => user.email === email
 );
@@ -20,7 +17,6 @@ if (existingUser) {
   });
 }
 
-// Hash password
 const hashedPassword = await bcrypt.hash(
   password,
   10
@@ -35,7 +31,7 @@ const user = {
 
 users.push(user);
 
-res.status(201).json({
+return res.status(201).json({
   message: "User Registered",
   user: {
     id: user.id,
@@ -45,25 +41,22 @@ res.status(201).json({
 });
 
 } catch (error) {
-console.log(error);
+console.error(error);
 
-res.status(500).json({
-  message: "Server Error",
+return res.status(500).json({
+  message: error.message,
 });
 
 }
 };
 
-// Login User
-
-
 export const loginUser = async (req, res) => {
 try {
-console.log("Login Request:", req.body);
-
 const { email, password } = req.body;
 
-const user = users.find((u) => u.email === email);
+const user = users.find(
+  (u) => u.email === email
+);
 
 if (!user) {
   return res.status(400).json({
@@ -99,15 +92,12 @@ return res.status(200).json({
 });
 
 } catch (error) {
-console.error(error);
-
+console.error("LOGIN ERROR:", error);
 
 return res.status(500).json({
   success: false,
   error: error.message,
 });
 
-
 }
 };
-
