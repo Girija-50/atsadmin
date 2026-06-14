@@ -38,12 +38,13 @@ function Register() {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+  console.log("REGISTER ERROR:", error);
 
-      alert(
-        error.response.data.message
-      );
-    }
+  res.status(500).json({
+    success: false,
+    error: error.message
+  });
+}
   };
 
   return (

@@ -9,7 +9,6 @@ export const registerUser = async (req, res) => {
 try {
 const { name, email, password } = req.body;
 
-```
 // Check existing user
 const existingUser = users.find(
   (user) => user.email === email
@@ -44,31 +43,27 @@ res.status(201).json({
     email: user.email,
   },
 });
-```
 
 } catch (error) {
 console.log(error);
 
-```
 res.status(500).json({
   message: "Server Error",
 });
-```
 
 }
 };
 
 // Login User
+
+
 export const loginUser = async (req, res) => {
+try {
 console.log("Login Request:", req.body);
 
-try {
 const { email, password } = req.body;
 
-```
-const user = users.find(
-  (u) => u.email === email
-);
+const user = users.find((u) => u.email === email);
 
 if (!user) {
   return res.status(400).json({
@@ -88,16 +83,12 @@ if (!isMatch) {
 }
 
 const token = jwt.sign(
-  {
-    id: user.id,
-  },
-  process.env.JWT_SECRET || "mysecretkey",
-  {
-    expiresIn: "7d",
-  }
+  { id: user.id },
+  "mysecretkey",
+  { expiresIn: "7d" }
 );
 
-res.status(200).json({
+return res.status(200).json({
   message: "Login Success",
   token,
   user: {
@@ -106,17 +97,17 @@ res.status(200).json({
     email: user.email,
   },
 });
-```
 
 } catch (error) {
-console.log("LOGIN ERROR:", error);
+console.error(error);
 
-```
-res.status(500).json({
+
+return res.status(500).json({
   success: false,
   error: error.message,
 });
-```
+
 
 }
 };
+

@@ -40,18 +40,13 @@ function Login() {
 
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
+  console.log("LOGIN ERROR:", error);
 
-      if (error.response) {
-        alert(
-          error.response.data.message
-        );
-      } else {
-        alert(
-          "Cannot connect to backend server"
-        );
-      }
-    }
+  res.status(500).json({
+    success: false,
+    error: error.message
+  });
+}
   };
 
   return (
