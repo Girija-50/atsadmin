@@ -12,6 +12,8 @@
     "nodemon": "^3.1.14"
   },
   "dependencies": {
+    "@capacitor/cli": "^8.4.0",
+    "@capacitor/core": "^8.4.0",
     "jspdf": "^4.2.1",
     "mongodb": "^7.3.0",
     "react-icons": "^5.6.0"
